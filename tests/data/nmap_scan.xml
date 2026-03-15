@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap">
+  <host>
+    <status state="up" />
+    <address addr="192.168.100.10" addrtype="ipv4" />
+    <ports>
+      <port protocol="tcp" portid="22">
+        <state state="open" />
+        <service name="ssh" product="OpenSSH" version="8.2p1" extrainfo="Ubuntu 4ubuntu0.5" />
+        <script id="banner" output="SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5" />
+      </port>
+      <port protocol="tcp" portid="80">
+        <state state="open" />
+        <service name="http" product="Apache httpd" version="2.4.62" extrainfo="Ubuntu" />
+        <script id="http-server-header" output="Apache/2.4.62 (Ubuntu)" />
+        <script id="http-title" output="Welcome to Apache" />
+        <script id="http-headers" output="HTTP/1.1 200 OK&#10;Server: Apache/2.4.62 (Ubuntu)&#10;X-Powered-By: EASM Lab&#10;" />
+      </port>
+      <port protocol="tcp" portid="443">
+        <state state="closed" />
+        <service name="https" product="Apache httpd" version="2.4.62" />
+      </port>
+      <port protocol="tcp" portid="3306">
+        <state state="open" />
+        <service name="mysql" product="MySQL" version="5.7.35" />
+        <script id="mysql-info" output="Protocol: 10&#10;Version: 5.7.35&#10;Error: Host is not allowed to connect from 192.168.100.99" />
+      </port>
+      <port protocol="tcp" portid="6379">
+        <state state="open" />
+        <service name="redis" product="Redis key-value store" version="6.0.16" />
+        <script id="redis-info" output="redis_version:6.0.16&#10;os:Linux 5.15.0 x86_64">
+          <table key="Server">
+            <elem key="redis_version">6.0.16</elem>
+            <elem key="os">Linux 5.15.0 x86_64</elem>
+          </table>
+        </script>
+      </port>
+      <port protocol="tcp" portid="9000">
+        <state state="open" />
+        <service name="unknown" product="Custom Gateway" version="1.2.3" />
+        <script id="banner" output="opaque handshake token and full custom banner text" />
+      </port>
+    </ports>
+  </host>
+</nmaprun>

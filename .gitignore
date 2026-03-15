@@ -1,0 +1,11 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+
+.runtime-targets.txt
+assets_state.json
+lab-assets-state.json
+lab-scan-1.json
+lab-scan-2.json
+scan-output-1-10000.json
+nmap-output/

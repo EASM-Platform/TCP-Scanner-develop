@@ -1,0 +1,97 @@
+services:
+  web:
+    build:
+      context: ./docker/apache
+    container_name: easm-web
+    hostname: easm-web
+    ports:
+      - "${WEB_HTTP_PORT:-80}:80"
+      - "${WEB_HTTPS_PORT:-443}:443"
+    networks:
+      easm_network:
+        ipv4_address: 192.168.100.10
+
+  mysql:
+    image: mysql:5.7
+    container_name: easm-mysql
+    hostname: easm-mysql
+    command:
+      - --bind-address=0.0.0.0
+      - --skip-name-resolve
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-easm-root-pass}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-easm_lab}"
+      MYSQL_USER: "${MYSQL_USER:-easm}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-easm-user-pass}"
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      easm_network:
+        ipv4_address: 192.168.100.20
+
+  redis:
+    image: redis:6.0
+    container_name: easm-redis
+    hostname: easm-redis
+    command:
+      - redis-server
+      - --bind
+      - 0.0.0.0
+      - --protected-mode
+      - "no"
+      - --appendonly
+      - "no"
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      easm_network:
+        ipv4_address: 192.168.100.30
+
+  ssh:
+    image: linuxserver/openssh-server
+    container_name: easm-ssh
+    hostname: easm-ssh
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "Asia/Seoul"
+      PASSWORD_ACCESS: "true"
+      USER_NAME: "${SSH_USERNAME:-scanner}"
+      USER_PASSWORD: "${SSH_PASSWORD:-scanner-pass}"
+      SUDO_ACCESS: "false"
+      LOG_STDOUT: "true"
+    ports:
+      - "${SSH_PORT:-22}:2222"
+    volumes:
+      - ssh_config:/config
+    networks:
+      easm_network:
+        ipv4_address: 192.168.100.40
+
+  shellshock:
+    build:
+      context: ./docker/shellshock
+    container_name: easm-shellshock
+    hostname: easm-shellshock
+    ports:
+      - "${SHELLSHOCK_PORT:-8080}:8080"
+    networks:
+      easm_network:
+        ipv4_address: 192.168.100.50
+
+networks:
+  easm_network:
+    name: easm_network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+
+volumes:
+  mysql_data:
+  ssh_config:
