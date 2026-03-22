@@ -1,0 +1,182 @@
+
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Port Scan Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 30px;
+            }
+            h1, h2 {
+                color: #333;
+            }
+            .summary-box {
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 20px;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .위험 {
+                color: red;
+                font-weight: bold;
+            }
+            .주의 {
+                color: orange;
+                font-weight: bold;
+            }
+            .일반 {
+                color: green;
+                font-weight: bold;
+            }
+            .capture-section {
+                margin-top: 40px;
+            }
+            .capture-card {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 15px;
+                margin-bottom: 20px;
+                background-color: #fafafa;
+            }
+            .capture-card img {
+                max-width: 100%;
+                border: 1px solid #ccc;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>서비스 포트 스캔 리포트</h1>
+
+        <div class="summary-box">
+            <p><strong>대상 IP:</strong> 192.168.227.128</p>
+            <p><strong>총 결과 수:</strong> 7</p>
+            <p><strong>위험:</strong> 0</p>
+            <p><strong>주의:</strong> 3</p>
+            <p><strong>일반:</strong> 3</p>
+            <p><strong>알 수 없음:</strong> 1</p>
+        </div>
+
+        <table>
+            <tr>
+                <th>포트</th>
+                <th>상태</th>
+                <th>서비스</th>
+                <th>제품</th>
+                <th>버전</th>
+                <th>위험도</th>
+                <th>이유</th>
+            </tr>
+    
+            <tr>
+                <td>22</td>
+                <td>open</td>
+                <td>ssh</td>
+                <td>OpenSSH</td>
+                <td>8.9p1 Ubuntu 3ubuntu0.14</td>
+                <td class="일반">일반</td>
+                <td>일반적인 원격 관리 서비스입니다.</td>
+            </tr>
+        
+            <tr>
+                <td>80</td>
+                <td>open</td>
+                <td>http</td>
+                <td>Apache httpd</td>
+                <td>2.4.52</td>
+                <td class="일반">일반</td>
+                <td>일반적인 웹 서비스입니다.</td>
+            </tr>
+        
+            <tr>
+                <td>111</td>
+                <td>open</td>
+                <td>rpcbind</td>
+                <td></td>
+                <td>2-4</td>
+                <td class="주의">주의</td>
+                <td>RPC 서비스는 외부 노출 시 내부 서비스 정보 노출 가능성이 있어 주의가 필요합니다.</td>
+            </tr>
+        
+            <tr>
+                <td>139</td>
+                <td>open</td>
+                <td>netbios-ssn</td>
+                <td></td>
+                <td></td>
+                <td class="주의">주의</td>
+                <td>NetBIOS 서비스는 외부 노출 시 주의가 필요합니다.</td>
+            </tr>
+        
+            <tr>
+                <td>445</td>
+                <td>open</td>
+                <td>microsoft-ds</td>
+                <td></td>
+                <td></td>
+                <td class="주의">주의</td>
+                <td>SMB 서비스는 외부 노출 시 공격 표면이 커질 수 있습니다.</td>
+            </tr>
+        
+            <tr>
+                <td>2042</td>
+                <td>open</td>
+                <td>tcpwrapped</td>
+                <td></td>
+                <td></td>
+                <td class="알 수 없음">알 수 없음</td>
+                <td>서비스가 접근 제어나 래핑으로 보호되어 있어 정확한 식별이 어렵습니다.</td>
+            </tr>
+        
+            <tr>
+                <td>8000</td>
+                <td>open</td>
+                <td>http-alt</td>
+                <td>Werkzeug/3.1.5 Python/3.10.12</td>
+                <td></td>
+                <td class="일반">일반</td>
+                <td>기본 포트 외에서 동작하는 웹 서비스입니다.</td>
+            </tr>
+        
+        </table>
+    
+        <div class="capture-section">
+            <h2>웹 포트 자동 캡처 결과</h2>
+    
+            <div class="capture-card">
+                <p><strong>포트:</strong> 80</p>
+                <p><strong>서비스:</strong> http</p>
+                <p><strong>캡처 파일:</strong> output/capture_192_168_227_128_80.png</p>
+            
+                <img src="capture_192_168_227_128_80.png" alt="capture_80">
+                
+            </div>
+            
+            <div class="capture-card">
+                <p><strong>포트:</strong> 8000</p>
+                <p><strong>서비스:</strong> http-alt</p>
+                <p><strong>캡처 파일:</strong> output/capture_192_168_227_128_8000.png</p>
+            
+                <img src="capture_192_168_227_128_8000.png" alt="capture_8000">
+                
+            </div>
+            
+        </div>
+    </body>
+    </html>
+    
